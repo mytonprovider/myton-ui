@@ -1,0 +1,63 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .row {
+    --control-press: var(--press);
+    position: relative;
+    background-color: var(--row-surface, var(--row-bg));
+    cursor: pointer;
+  }
+
+  /* Above the row's content, so text that places itself (a key measuring its box) cannot catch the tap. */
+  .open {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: none;
+    cursor: pointer;
+  }
+
+  /* No specificity of its own, so a control that places itself keeps its place: only the lift is shared. A hint
+     (tabindex 0) is a control here too, or the open button under the pointer takes its hover and tap. */
+  :where(.row :is(button, a, input, select, textarea, [tabindex="0"]):not(.open)) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .row[data-viewed],
+  .row:has(> .open:focus-visible) {
+    background-color: var(--row-mark, var(--surface-3));
+  }
+
+  .open:focus-visible {
+    outline: none;
+  }
+
+  /* Over the whole row and above the cells a front pins over it (the MTS pick column stands at 3), so none of them
+     covers the ring's start. */
+  .row:has(> .open:focus-visible)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--focus-edge);
+    pointer-events: none;
+  }
+
+  /* Hover and press come after the open and the focused marks: such a row under the pointer still shows the hover,
+     the focus ring kept. A control inside keeps a step off the row's hover. */
+  @media (hover: hover) {
+    .row:hover {
+      --control-hover: var(--press);
+      background-color: var(--row-hover, var(--hover));
+    }
+  }
+
+  .row:has(> .open:active) {
+    background-color: var(--row-hover, var(--hover));
+  }
+}

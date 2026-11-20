@@ -1,0 +1,7 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .active svg {
+    fill: currentColor;
+  }
+}

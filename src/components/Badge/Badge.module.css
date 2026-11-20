@@ -1,0 +1,83 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The tone's text is quiet on its own wash, so the label needs no bold. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: max-content;
+    max-width: 100%;
+    min-height: var(--line-control);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-xs);
+    background: var(--tone-tint);
+    color: var(--tone-ink);
+    font-weight: var(--w-regular);
+    line-height: var(--line-control);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .md {
+    font-size: var(--font-base);
+  }
+
+  .sm {
+    font-size: var(--font-xs);
+  }
+
+  .dot {
+    flex: none;
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--tone);
+  }
+
+  .label {
+    display: contents;
+  }
+
+  .fit {
+    display: grid;
+    min-width: 0;
+  }
+
+  .fit > * {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+
+  .fit > .label {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .room {
+    visibility: hidden;
+  }
+
+  /* As tall as it is wide, the dot in its middle, on every front alike. */
+  .badge[data-compact] {
+    justify-content: center;
+    gap: 0;
+    width: var(--line-control);
+    padding: 0;
+  }
+
+  .badge[data-compact] .room {
+    display: none;
+  }
+
+  .badge[data-compact] .label {
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

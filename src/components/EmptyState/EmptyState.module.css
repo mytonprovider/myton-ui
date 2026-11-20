@@ -1,0 +1,93 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .state {
+    text-align: center;
+  }
+
+  .title,
+  .hint,
+  .code {
+    margin: 0;
+  }
+
+  .md {
+    padding: var(--space-11) var(--space-3);
+    color: var(--text-2);
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+  }
+
+  .hint,
+  .code {
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+  }
+
+  .md .hint,
+  .md .code {
+    margin-top: var(--space-2);
+  }
+
+  .code {
+    font-family: var(--font-mono), monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .md .action {
+    margin-top: var(--space-3);
+  }
+
+  /* The mini-app's state fills the screen it stands on. */
+  .lg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-10) var(--space-9);
+  }
+
+  .mark {
+    display: inline-flex;
+    color: var(--accent);
+  }
+
+  .muted .mark {
+    color: var(--text-2);
+  }
+
+  .icon {
+    width: var(--control-md);
+    height: var(--control-md);
+  }
+
+  .lg .title {
+    margin-top: var(--pad-pill);
+    color: var(--text);
+    font-size: var(--font-lg);
+    line-height: var(--line-base);
+    font-weight: var(--w-medium);
+    text-wrap: balance;
+  }
+
+  .lg .hint,
+  .lg .code {
+    margin-top: var(--space-25);
+    text-wrap: balance;
+  }
+
+  /* Two lines at least, so the icon does not jump when a one-line hint replaces a two-line one. */
+  .lg .hint {
+    min-height: calc(2em * var(--line-base));
+  }
+
+  .lg .action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    margin-top: var(--space-6);
+  }
+}

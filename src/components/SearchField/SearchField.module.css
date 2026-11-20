@@ -1,0 +1,87 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .field {
+    position: relative;
+    min-width: 0;
+  }
+
+  .icon {
+    position: absolute;
+    left: var(--space-6);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+    color: var(--text-2);
+    pointer-events: none;
+  }
+
+  .input {
+    width: 100%;
+    height: var(--control-lg);
+    padding: 0 calc(var(--space-6) + var(--icon-lg) + var(--space-3));
+    border: 1px solid var(--control-edge);
+    border-radius: var(--radius-pill);
+    background: var(--field-fill);
+    box-shadow: var(--shadow-1);
+    color: var(--text);
+    font: inherit;
+    /* 16px at every width: iOS zooms into a field set smaller, and the coarse-pointer query did not catch every
+       webview. */
+    font-size: var(--font-lg);
+    outline: none;
+    text-overflow: ellipsis;
+  }
+
+  .input::placeholder {
+    color: var(--text-2);
+  }
+
+  /* An empty field has no clear button, so a long placeholder may run into its room. */
+  .input:placeholder-shown {
+    padding-right: var(--space-6);
+  }
+
+  /* As TextField: the brand blue at once, no hover grey before it. */
+  .input:focus {
+    border-color: var(--focus-edge);
+  }
+
+  .input.invalid {
+    border-color: var(--btn-danger);
+  }
+
+  /* Doubled to outrank IconButton's position: relative, which sits in the same layer. */
+  .clear.clear {
+    position: absolute;
+    right: var(--pad-pill);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .md .icon {
+    left: var(--pad-pill);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+  }
+
+  .md .input {
+    height: var(--control-md);
+    padding: 0 var(--space-10);
+  }
+
+  .md .input:placeholder-shown {
+    padding-right: var(--space-6);
+  }
+
+  .md .clear {
+    right: var(--space-3);
+  }
+
+  @media (pointer: coarse) {
+    .md .input {
+      height: var(--control-input);
+    }
+  }
+}

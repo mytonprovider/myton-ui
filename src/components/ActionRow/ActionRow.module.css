@@ -1,0 +1,22 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .row {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-5);
+  }
+
+  @media (max-width: 599px) {
+    .row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .row > :is(button, a) {
+      min-width: var(--action-min);
+    }
+  }
+}

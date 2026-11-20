@@ -1,0 +1,27 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The box asks for the widest form and shrinks with its row, so the measured width says how many cells fit.
+     The face is monospaced, the ellipsis takes a cell too, and tracking is held at zero so a cell is exactly 1ch. */
+  .id {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    flex: 0 1 auto;
+    min-width: 0;
+    width: calc(var(--id-cells) * 1ch);
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: var(--font-mono), monospace;
+    font-variant-ligatures: none;
+    letter-spacing: 0;
+  }
+
+  /* Read live, so a late web font re-measures through the box's own resize. */
+  .cell {
+    position: absolute;
+    width: 1ch;
+    visibility: hidden;
+  }
+}

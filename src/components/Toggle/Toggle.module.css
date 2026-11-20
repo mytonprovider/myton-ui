@@ -1,0 +1,66 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .track {
+    position: relative;
+    flex: none;
+    width: var(--control-md);
+    height: calc(var(--control-thumb) + var(--space-05) * 2);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--control-off);
+    cursor: pointer;
+    transition: background var(--dur-fast) ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .on {
+    background: var(--btn);
+  }
+
+  .knob {
+    position: absolute;
+    top: var(--space-05);
+    left: var(--space-05);
+    width: var(--control-thumb);
+    height: var(--control-thumb);
+    border-radius: var(--radius-pill);
+    background: var(--btn-ink);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--dur-fast) ease;
+  }
+
+  .on .knob {
+    transform: translateX(calc(var(--control-md) - var(--control-thumb) - var(--space-05) * 2));
+  }
+
+  /* A press takes the hover step, so a finger that never hovers sees it too; the switch flips at once and
+     does not shrink like a pill. */
+  .track:active {
+    background: var(--control-off-hover);
+  }
+
+  .on:active {
+    background: var(--btn-hover);
+  }
+
+  @media (hover: hover) {
+    .track:hover {
+      background: var(--control-off-hover);
+    }
+
+    .on:hover {
+      background: var(--btn-hover);
+    }
+  }
+
+  /* The pill is 24 tall; a finger gets the 44 the other small targets give it. */
+  @media (pointer: coarse) {
+    .track::after {
+      content: "";
+      position: absolute;
+      inset: calc((100% - var(--control-input)) / 2);
+    }
+  }
+}
