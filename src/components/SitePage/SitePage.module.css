@@ -1,0 +1,64 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* A tab's panel comes in from the side: the page does not scroll sideways while it does. */
+  .shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: clip;
+  }
+
+  .main {
+    flex: 1;
+    width: 100%;
+    padding: clamp(var(--space-9), 6vw, var(--space-10)) var(--space-6) var(--space-3);
+  }
+
+  .main:focus-visible {
+    outline: none;
+  }
+
+  /* One title line and one subtitle line, two on a phone: the same height on both sites and in either language, so the
+     body below never moves; a longer text runs on over the top of what follows, and stays above the globe's opener
+     (layer 1) so a link in it can still be pressed. */
+  .hero {
+    --subtitle-lines: 1;
+    position: relative;
+    z-index: 2;
+    max-width: var(--reading-max);
+    height: calc(
+      var(--font-hero) * var(--line-tight) + var(--space-5) + var(--font-hero-sub) * var(--line-base) *
+        var(--subtitle-lines)
+    );
+    margin: 0 auto var(--space-10);
+    text-align: center;
+  }
+
+  @media (max-width: 599px) {
+    .hero {
+      --subtitle-lines: 2;
+    }
+
+    /* The bottom tab bar floats over the page's end: the footer stops above it. */
+    .shell:has([data-tab-dock]) {
+      padding-bottom: var(--dock-space);
+    }
+  }
+
+  .title {
+    margin-bottom: var(--space-5);
+    font-size: var(--font-hero);
+    line-height: var(--line-tight);
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: pretty;
+  }
+
+  .subtitle {
+    color: var(--text-2);
+    font-size: var(--font-hero-sub);
+    line-height: var(--line-base);
+    text-wrap: pretty;
+  }
+}

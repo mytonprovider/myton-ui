@@ -1,0 +1,96 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .header {
+    background: var(--bg);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    width: 100%;
+    max-width: calc(var(--content-max) + var(--space-6) * 2);
+    min-height: var(--header-h);
+    margin: 0 auto;
+    padding: var(--space-6);
+  }
+
+  .brand {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: var(--space-4);
+    min-width: 0;
+    color: var(--text);
+  }
+
+  @media (hover: hover) {
+    .brand:hover {
+      color: var(--text);
+      text-decoration: none;
+    }
+  }
+
+  .logo {
+    flex: none;
+  }
+
+  .title {
+    composes: ellipsis from "../../styles/text.module.css";
+    min-width: 0;
+    font-size: var(--font-xl);
+    line-height: var(--line-base);
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-snug);
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .language {
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    font-weight: var(--w-medium);
+  }
+
+  .icon {
+    view-transition-name: theme-icon;
+  }
+
+  ::view-transition-old(theme-icon) {
+    animation: theme-icon-out var(--dur-base) var(--ease-sheet) both;
+  }
+
+  ::view-transition-new(theme-icon) {
+    animation: theme-icon-in var(--dur-base) var(--ease-sheet) both;
+  }
+
+  @keyframes theme-icon-out {
+    to {
+      transform: rotate(90deg) scale(0.7);
+      opacity: 0;
+    }
+  }
+
+  @keyframes theme-icon-in {
+    from {
+      transform: rotate(-90deg) scale(0.7);
+      opacity: 0;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .brand {
+      min-width: var(--control-input);
+      min-height: var(--control-input);
+    }
+  }
+
+  @media (max-width: 599px) {
+    .title {
+      display: none;
+    }
+  }
+}

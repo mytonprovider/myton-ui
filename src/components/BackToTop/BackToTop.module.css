@@ -1,0 +1,33 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Doubled to outrank IconButton's own position: the two modules load in no fixed order. */
+  .button.button {
+    position: fixed;
+    right: var(--space-8);
+    bottom: var(--space-8);
+    z-index: var(--layer-float);
+    visibility: hidden;
+  }
+
+  /* Above the bottom tab bar, as the mini-app's own button stands over its dock. */
+  @media (max-width: 599px) {
+    :root:has([data-tab-dock]) .button.button {
+      bottom: calc(var(--dock-space) + var(--space-5));
+    }
+  }
+
+  .button.shown {
+    visibility: visible;
+    animation: fade-in var(--dur-fast) ease-out;
+  }
+}
