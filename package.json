@@ -1,6 +1,6 @@
 {
   "name": "@myton/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Shared tokens, base styles, components, domain rules and texts of the MyTON fronts",
   "license": "Apache-2.0",
