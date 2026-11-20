@@ -1,0 +1,26 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .box {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: var(--control-thumb);
+    height: var(--control-thumb);
+    border-radius: var(--radius-xs);
+    border: 2px solid var(--control-off);
+    background: transparent;
+    color: var(--btn-ink);
+    transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+
+  .on {
+    background: var(--btn);
+    border-color: var(--btn);
+  }
+
+  .icon {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+  }
+}

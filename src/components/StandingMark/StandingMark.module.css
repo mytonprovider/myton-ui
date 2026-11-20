@@ -1,0 +1,42 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .mark {
+    margin-left: var(--space-1);
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    font-weight: var(--w-medium);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .rank,
+  .share {
+    margin-left: 0;
+    font-weight: var(--w-regular);
+  }
+
+  .rank {
+    font-size: var(--font-base);
+  }
+
+  .share {
+    letter-spacing: var(--tracking-small);
+  }
+
+  .mark[data-tone="prize"] {
+    color: var(--rank-prize);
+  }
+
+  .mark[data-tone="top"] {
+    color: var(--accent);
+  }
+
+  .mark[data-tone="orange"] {
+    color: var(--tone-orange-text);
+  }
+
+  .mark[data-tone="red"] {
+    color: var(--tone-red-text);
+  }
+}

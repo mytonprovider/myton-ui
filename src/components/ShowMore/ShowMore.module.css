@@ -1,0 +1,16 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+
+  .showing {
+    color: var(--text-2);
+    font-size: var(--font-base);
+  }
+}

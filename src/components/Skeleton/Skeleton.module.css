@@ -1,0 +1,71 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  @keyframes shimmer {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* The shape's box, with no specificity: laid on a front's own element (a badge, a checkbox, a button standing in
+     for the real one) it keeps that element's box and radius. A bare span turns inline-block to take a size; a block
+     stays a block, or a div with no width of its own would shrink to nothing. */
+  :where(.shape) {
+    border-radius: var(--radius-xs);
+  }
+
+  :where(span.shape) {
+    display: inline-block;
+    flex: none;
+    max-width: 100%;
+  }
+
+  /* The look must win over that element's own wherever it is styled: an important declaration in a layer outranks a
+     front's unlayered one, a plain one never does. */
+  .shape {
+    --tone: transparent !important;
+    border-color: transparent !important;
+    background: var(--fill) !important;
+    box-shadow: none !important;
+    color: transparent !important;
+    animation: shimmer var(--dur-shimmer) ease-in-out infinite;
+  }
+
+  .round {
+    border-radius: var(--radius-pill);
+  }
+
+  /* Top-aligned: an inline-block that clips takes its bottom edge for a baseline, and inside a line of text (a details
+     row's value) it would raise the line by the descent, a skeleton row taller than the row it stands for. */
+  .ghostValue {
+    composes: ellipsis from "../../styles/text.module.css";
+    line-height: var(--line-base);
+    vertical-align: top;
+  }
+
+  .ghostVary {
+    transform-origin: left center;
+    transform: scaleX(var(--shape-k, 1));
+  }
+
+  .ghostBox {
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+
+  .xs {
+    width: var(--control-xs);
+    height: var(--control-xs);
+  }
+
+  .sm {
+    width: var(--control-sm);
+    height: var(--control-sm);
+  }
+}

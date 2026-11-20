@@ -1,0 +1,134 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform var(--press-out) ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .md {
+    height: var(--control-md);
+    padding: 0 var(--space-7);
+    font-size: var(--font-base);
+  }
+
+  /* A row action: the pill shrinks to the row, not the screen. */
+  .sm {
+    height: var(--control-sm);
+    padding: 0 var(--pad-pill);
+    font-size: var(--font-base);
+  }
+
+  .xl {
+    height: var(--control-lg);
+    padding: 0 var(--space-9);
+    font-size: var(--font-lg);
+  }
+
+  .block {
+    width: 100%;
+  }
+
+  .primary,
+  .danger {
+    color: var(--btn-ink);
+    font-weight: var(--w-medium);
+  }
+
+  .primary {
+    background: var(--btn);
+  }
+
+  .danger {
+    background: var(--btn-danger);
+  }
+
+  /* The secondary white pill: its own fill on the screen, edged by the shadow ring like cards. */
+  .secondary {
+    border-color: var(--control-edge);
+    background: var(--field-fill);
+    box-shadow: var(--shadow-1);
+    color: var(--text);
+    font-weight: var(--w-medium);
+  }
+
+  /* No edge to keep, so no transparent border either: it widened the sites' text buttons by 2px. Height and size
+     follow size; the inset stays the row pill's at every size, so the label sits where a text action is expected. */
+  .text {
+    border: 0;
+    padding: 0 var(--pad-pill);
+    color: var(--text-2);
+    font-weight: var(--w-medium);
+  }
+
+  .accentTone {
+    color: var(--accent);
+  }
+
+  .redTone {
+    color: var(--tone-red-text);
+  }
+
+  .button:is(:disabled, [aria-disabled="true"]) {
+    opacity: var(--disabled-opacity);
+    cursor: default;
+  }
+
+  /* A link has no disabled state of its own: aria-disabled marks it, and it must not follow. A label for a file input
+     keeps the pointer, so its title still tells why it is off. */
+  a.button[aria-disabled="true"] {
+    pointer-events: none;
+  }
+
+  /* One press effect: a filled button shrinks and its fill stays where hover left it; a text button
+     cannot shrink visibly, so it keeps the hover tone, no deeper. The white pill has no hover fill: it stands
+     raised like a card, and in light the text layer took its fill down to the screen's grey. */
+  .primary:active:not(:disabled, [aria-disabled="true"]),
+  .danger:active:not(:disabled, [aria-disabled="true"]),
+  .secondary:active:not(:disabled, [aria-disabled="true"]) {
+    transform: scale(var(--press-scale));
+    transition-duration: var(--press-in);
+  }
+
+  .text:active:not(:disabled, [aria-disabled="true"]) {
+    background: var(--ghost-hover);
+  }
+
+  @media (hover: hover) {
+    .primary:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--btn-hover);
+    }
+
+    .danger:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--btn-danger-hover);
+    }
+
+    .text:hover:not(:disabled, [aria-disabled="true"], :active) {
+      background: var(--ghost-hover);
+    }
+  }
+
+  /* A finger needs 44px; the smaller sizes grow their hit area, not their look. */
+  @media (pointer: coarse) {
+    .sm::after,
+    .md::after {
+      content: "";
+      position: absolute;
+      inset: calc((100% - var(--control-input)) / 2) 0;
+    }
+  }
+}

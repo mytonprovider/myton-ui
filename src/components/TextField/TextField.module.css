@@ -1,0 +1,63 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The fill separates the field, a quiet edge holds its shape over pictures. Focus only recolours that edge: a glow
+     or a 2px line reads too heavy, and a hover grey with a fade makes the edge blink on a click. */
+  .field {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-width: 0;
+    min-height: var(--control-input);
+    padding: 0 var(--space-6);
+    border: 1px solid var(--control-edge);
+    border-radius: var(--radius-pill);
+    background: var(--field-fill);
+    box-shadow: var(--shadow-1);
+    color: var(--text-2);
+  }
+
+  .field:focus-within {
+    border-color: var(--focus-edge);
+  }
+
+  .field.invalid {
+    border-color: var(--btn-danger);
+  }
+
+  .field:has(.input:disabled) {
+    opacity: var(--disabled-opacity);
+  }
+
+  .input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    outline: none;
+    color: var(--text);
+    font: inherit;
+    font-size: var(--font-lg);
+    line-height: var(--line-base);
+    text-overflow: ellipsis;
+  }
+
+  .input::placeholder {
+    color: var(--text-2);
+  }
+
+  /* Tabular digits keep the counter from jittering as it counts. */
+  .counter {
+    flex: none;
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Past the limit the digits the person is counting turn red with the edge. */
+  .invalid .counter {
+    color: var(--tone-red-text);
+  }
+}

@@ -1,0 +1,37 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .card {
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+  }
+
+  .frame {
+    overflow: clip;
+  }
+
+  /* The frame clips whatever leaves it, so a row draws its focus ring inside; the end rows take the frame's
+     corners for it, or the clip cuts the ring there. */
+  .frame > :focus-visible {
+    outline-offset: -2px;
+  }
+
+  .frame > :first-child:focus-visible {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+
+  .frame > :last-child:focus-visible {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  .row {
+    padding: var(--row-py) var(--row-px);
+  }
+
+  .block {
+    padding: var(--space-6);
+  }
+}

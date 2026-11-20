@@ -1,0 +1,9 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .dot {
+    display: inline-block;
+    border-radius: 50%;
+    flex: none;
+  }
+}

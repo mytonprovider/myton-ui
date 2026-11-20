@@ -1,0 +1,138 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* A row can restate --control-hover/--control-press so the tone stays a step off the hovered row.
+     Unset, a press keeps the hover tone, as text buttons do. */
+  .button:not(.secondary, .primary, .pressed):active:not(:disabled, [aria-disabled="true"]) {
+    background: var(--control-press, var(--control-hover, var(--ghost-hover)));
+  }
+
+  .button:is(:disabled, [aria-disabled="true"]) {
+    opacity: var(--disabled-opacity);
+    cursor: default;
+  }
+
+  /* As Button: a link must not follow; any other button keeps the pointer, so its title still tells why it is off. */
+  a.button[aria-disabled="true"] {
+    pointer-events: none;
+  }
+
+  /* The secondary and primary fills of Button, with its hover and its one press effect; the white pill, as in
+     Button, has no hover fill. */
+  .secondary {
+    border: 1px solid var(--control-edge);
+    background: var(--field-fill);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--press-out) ease;
+  }
+
+  .primary {
+    background: var(--btn);
+    color: var(--btn-ink);
+    transition: transform var(--press-out) ease;
+  }
+
+  .secondary:active:not(:disabled, [aria-disabled="true"]),
+  .primary:active:not(:disabled, [aria-disabled="true"]) {
+    transform: scale(var(--press-scale));
+    transition-duration: var(--press-in);
+  }
+
+  .red {
+    color: var(--tone-red-text);
+  }
+
+  .accent {
+    color: var(--accent);
+  }
+
+  .yellow {
+    color: var(--tone-yellow-text);
+  }
+
+  .green {
+    color: var(--tone-green-text);
+  }
+
+  /* After the tones: a pressed toggle reads as the accent whatever its tone. */
+  .pressed {
+    background: var(--accent-weak);
+    color: var(--accent);
+  }
+
+  @media (hover: hover) {
+    .button:not(.secondary, .primary, .pressed):hover:not(:disabled, [aria-disabled="true"], :active) {
+      background: var(--control-hover, var(--ghost-hover));
+    }
+
+    .button:not(.red, .yellow, .green, .accent, .primary, .pressed):hover:not(:disabled, [aria-disabled="true"]) {
+      color: var(--text);
+    }
+
+    .primary:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--btn-hover);
+    }
+  }
+
+  .xs {
+    width: var(--control-xs);
+    height: var(--control-xs);
+  }
+
+  .sm {
+    width: var(--control-sm);
+    height: var(--control-sm);
+  }
+
+  .md {
+    width: var(--control-md);
+    height: var(--control-md);
+  }
+
+  .lg {
+    width: var(--control-input);
+    height: var(--control-input);
+  }
+
+  .xl {
+    width: var(--control-lg);
+    height: var(--control-lg);
+  }
+
+  .glyphXs {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+  }
+
+  .glyphSm {
+    width: var(--icon-control);
+    height: var(--icon-control);
+  }
+
+  .glyphMd {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+  }
+
+  @media (pointer: coarse) {
+    .button::after {
+      content: "";
+      position: absolute;
+      inset: calc((100% - var(--control-input)) / 2);
+    }
+  }
+}

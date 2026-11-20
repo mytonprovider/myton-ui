@@ -1,0 +1,15 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .ratio {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-05);
+    font-size: var(--font-xs);
+  }
+
+  .slash {
+    color: var(--text-2);
+  }
+}
