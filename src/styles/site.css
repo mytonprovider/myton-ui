@@ -1,0 +1,20 @@
+@layer ui.tokens, ui.base, ui.components;
+
+/* The page rules both sites share. Not in base.css: the mini-app's shell scrolls its own root and keeps
+   the browser's body text size. */
+@layer ui.base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-h) + var(--space-6));
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+  }
+}

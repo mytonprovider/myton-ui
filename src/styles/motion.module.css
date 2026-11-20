@@ -1,0 +1,13 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .spin {
+    animation: spin var(--dur-spin) linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
