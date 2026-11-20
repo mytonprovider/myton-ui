@@ -1,0 +1,262 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The table is its own container: it turns its rows into cards by the width it is given, not the window's, so a
+     sheet or a phone screen gets the same card. Cards come below 1100px, what the widest table, the MTS provider
+     catalogue, was measured to need; the narrow card below the scale's 600. A front that restyles a row for the card
+     asks the same container by its name. */
+  .table {
+    container: data-table / inline-size;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: var(--table-cols);
+    justify-content: space-between;
+    column-gap: var(--space-6);
+    align-content: start;
+    overflow-x: auto;
+  }
+
+  /* The scroller would clip the card's shadow; a pixel on top and --space-1 on the other sides keep it. */
+  .framed .grid {
+    margin: -1px calc(var(--space-1) * -1) calc(var(--space-1) * -1);
+    padding: 1px var(--space-1) var(--space-1);
+  }
+
+  .subgrid,
+  .head,
+  .cardHead,
+  .rows,
+  .row {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+  }
+
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    padding: var(--space-4) var(--pad-pill);
+    border-bottom: 1px solid var(--divider);
+    background: var(--row-alt);
+    color: var(--text-2);
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+  }
+
+  .cardHead {
+    padding: 0 var(--pad-pill) var(--space-7);
+    color: var(--text-2);
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+  }
+
+  .headCell {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+    min-height: var(--line-control);
+  }
+
+  .rows > * {
+    --row-surface: var(--row-bg);
+    --field-fill: var(--row-alt);
+  }
+
+  .rows > :nth-child(even) {
+    --row-surface: var(--row-alt);
+    --field-fill: var(--row-bg);
+  }
+
+  /* Loading rows vary their shapes so the column does not read as one block. */
+  .rows > :nth-child(5n + 2) {
+    --shape-k: 0.8;
+  }
+
+  .rows > :nth-child(5n + 3) {
+    --shape-k: 1.15;
+  }
+
+  .rows > :nth-child(5n + 4) {
+    --shape-k: 0.9;
+  }
+
+  .rows > :nth-child(5n + 5) {
+    --shape-k: 1.05;
+  }
+
+  .row {
+    row-gap: var(--space-4);
+    width: 100%;
+    padding: var(--row-py) var(--pad-pill);
+    background-color: var(--row-surface);
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-05);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .label {
+    display: none;
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+    letter-spacing: var(--tracking-small);
+  }
+
+  .value {
+    composes: ellipsis from "../../styles/text.module.css";
+    min-width: 0;
+    min-height: var(--line-control);
+    color: var(--text);
+    font-size: var(--font-base);
+    line-height: var(--line-control);
+  }
+
+  .lead {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .mono {
+    min-width: max-content;
+    font-family: var(--font-mono), monospace;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    font-weight: var(--w-regular);
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .upper {
+    text-transform: uppercase;
+  }
+
+  @media (pointer: coarse) {
+    .link {
+      min-height: var(--control-input);
+    }
+  }
+
+  /* The card's end rows take its corners, so the focus ring, drawn inside the row, follows the clip. */
+  .framed .rows > :first-child {
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+  }
+
+  .framed .rows > :last-child {
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  @container data-table (width < 1100px) {
+    .stack .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .stack .cardHead {
+      display: none;
+    }
+
+    .stack .row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-5) var(--space-4);
+      padding: var(--space-5) var(--pad-pill);
+    }
+
+    .stack .row > .lead,
+    .stack .row > .leadCell {
+      grid-column: 1 / -1;
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .stack .leadCell > .label {
+      display: none;
+    }
+
+    .stack .label {
+      display: block;
+      flex: none;
+    }
+
+    .stack .value {
+      font-weight: var(--w-value);
+    }
+
+    .stack .actions {
+      grid-column: 1 / -1;
+      padding-top: var(--space-2);
+    }
+  }
+
+  @container data-table (width < 600px) {
+    .stack .row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .stack .cell {
+      gap: 0;
+    }
+
+    .stack .row > .leadCell {
+      grid-column: auto;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .stack .leadCell > .label {
+      display: block;
+    }
+
+    .stack .actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .stack .fill {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: var(--space-4);
+      border-top: 1px solid var(--divider);
+    }
+
+    .stack .actions.fill > * {
+      width: 100%;
+      height: var(--control-md);
+      box-shadow: var(--shadow-1);
+    }
+
+    /* A pressed toggle keeps its own fill. */
+    .stack .actions.fill > :not([aria-pressed="true"]) {
+      background: var(--field-fill);
+    }
+
+    .stack .copyOnWide {
+      display: none;
+    }
+  }
+}

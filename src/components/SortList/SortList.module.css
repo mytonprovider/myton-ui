@@ -1,0 +1,12 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* The arrow stands on the field in effect only, so it marks the pick and its direction at once; a check beside it
+     would say the same twice. */
+  .arrow {
+    flex: none;
+    width: var(--icon-md);
+    height: var(--icon-md);
+    color: var(--accent);
+  }
+}

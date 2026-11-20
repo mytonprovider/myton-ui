@@ -1,0 +1,88 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Set here, not inherited: the mini-app sets no line height on its page, and its card came 142 against the sites'
+     147.7. */
+  .card {
+    container: status-card / inline-size;
+    line-height: var(--line-base);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--row-py) var(--row-px);
+  }
+
+  .ratio {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .ratioLabel {
+    font-size: var(--font-xs);
+    letter-spacing: var(--tracking-small);
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .labelShort {
+    display: none;
+  }
+
+  /* The full label beside the widest status, its percent and four-digit counts needs a 410 px card; narrower, the
+     counter fell to a line of its own. */
+  @container status-card (width < 420px) {
+    .labelFull {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .labelShort {
+      display: inline;
+    }
+  }
+
+  .description {
+    margin: 0;
+    font-size: var(--font-xs);
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-25);
+  }
+
+  .legendRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .legendLabel,
+  .legendCount {
+    font-size: var(--font-xs);
+    letter-spacing: var(--tracking-small);
+    color: var(--text-2);
+  }
+
+  .legendLabel {
+    flex: 1;
+    min-width: 0;
+    text-wrap: pretty;
+  }
+
+  .legendCount {
+    flex: none;
+    margin-left: var(--space-5);
+    white-space: nowrap;
+  }
+}

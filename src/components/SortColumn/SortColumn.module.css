@@ -1,0 +1,50 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .column {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+    height: var(--line-control);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-2);
+    font: inherit;
+    font-size: var(--font-base);
+    font-weight: var(--w-regular);
+    text-align: left;
+    user-select: none;
+  }
+
+  .sortable {
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    .sortable:hover {
+      color: var(--text);
+    }
+  }
+
+  .active {
+    color: var(--accent);
+  }
+
+  .text {
+    composes: ellipsis from "../../styles/text.module.css";
+    min-width: 0;
+  }
+
+  .arrow {
+    flex: none;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    color: var(--accent);
+  }
+
+  .idle {
+    visibility: hidden;
+  }
+}

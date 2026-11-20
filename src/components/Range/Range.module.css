@@ -1,0 +1,171 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .track {
+    --thumb-pad: calc((var(--control-input) - var(--control-xs)) / 2);
+    position: relative;
+    height: var(--control-thumb);
+  }
+
+  .rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc((var(--control-thumb) - var(--space-1)) / 2);
+    display: block;
+    height: var(--space-1);
+    border-radius: var(--space-05);
+    background: var(--seg-track);
+  }
+
+  .fill {
+    composes: rail;
+    left: var(--fill-start);
+    right: var(--fill-end);
+    background: var(--accent);
+  }
+
+  .thumb {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: var(--control-thumb);
+    margin: 0;
+    appearance: none;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  /* Thumbs that meet stack and the upper one takes the drag. At the top only "from" can move away, at the bottom only
+     "to", so "from" rises once it is past the middle */
+  .thumb[data-raised] {
+    z-index: 1;
+  }
+
+  /* The ring takes the raised colour a segmented thumb wears: white in light, so a range on a grey sheet keeps its
+     white outline, and grey step 6 in dark, where the card's own colour vanished on the sheet (CIEDE2000 3.2 against
+     10.7). A finger's thumb below keeps the card colour, as it lies on a card in both themes. */
+  .thumb::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: auto;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--seg-thumb);
+    background: var(--accent);
+    box-shadow: var(--shadow-1);
+    cursor: grab;
+  }
+
+  .thumb::-moz-range-thumb {
+    box-sizing: border-box;
+    pointer-events: auto;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--seg-thumb);
+    background: var(--accent);
+    box-shadow: var(--shadow-1);
+    cursor: grab;
+  }
+
+  .thumb:disabled::-webkit-slider-thumb {
+    cursor: default;
+  }
+
+  .thumb:disabled::-moz-range-thumb {
+    cursor: default;
+  }
+
+  .thumb:focus-visible {
+    outline: none;
+  }
+
+  /* The field's focus: one thin focus line, here past the card-coloured gap the thumb already wears. */
+  .thumb:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 1px var(--focus-edge), var(--shadow-1);
+  }
+
+  .thumb:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 1px var(--focus-edge), var(--shadow-1);
+  }
+
+  .ticks {
+    --thumb-radius: calc(var(--icon-sm) / 2);
+    position: relative;
+    height: calc(var(--font-xs) * var(--line-base));
+    margin-top: var(--space-2);
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+    pointer-events: none;
+  }
+
+  /* A label sits under the thumb's centre, which travels between the two thumb radii, not edge to edge. */
+  .tick {
+    position: absolute;
+    top: 0;
+    left: calc(var(--thumb-radius) + (100% - var(--thumb-radius) * 2) * var(--tick));
+    transform: translateX(calc(var(--tick) * -100%));
+    white-space: nowrap;
+  }
+
+  .tick[data-off] {
+    visibility: hidden;
+  }
+
+  /* A finger gets a 44px thumb: a 24px box of dot and card-coloured ring, the rest a transparent border. */
+  @media (pointer: coarse) {
+    .ticks {
+      --thumb-radius: calc(var(--control-xs) / 2);
+    }
+
+    .thumb {
+      left: calc(-1 * var(--thumb-pad));
+      width: calc(100% + var(--thumb-pad) * 2);
+      height: var(--control-input);
+      top: calc((var(--control-thumb) - var(--control-input)) / 2);
+    }
+
+    .thumb::-webkit-slider-thumb {
+      box-sizing: border-box;
+      width: var(--control-input);
+      height: var(--control-input);
+      border-width: var(--thumb-pad);
+      border-color: transparent;
+      background-clip: content-box;
+      box-shadow: inset 0 0 0 2px var(--surface);
+    }
+
+    .thumb::-moz-range-thumb {
+      box-sizing: border-box;
+      width: var(--control-input);
+      height: var(--control-input);
+      border-width: var(--thumb-pad);
+      border-color: transparent;
+      background-clip: content-box;
+      box-shadow: inset 0 0 0 2px var(--surface);
+    }
+
+    /* An outer shadow starts past the transparent border, so the line is drawn inside: a pixel off the border makes
+       room for it. Outward from the 20px dot: the 2px card-coloured gap, then the 1px line. */
+    .thumb:focus-visible::-webkit-slider-thumb {
+      border-width: calc(var(--thumb-pad) - 1px);
+      box-shadow:
+        inset 0 0 0 1px var(--focus-edge),
+        inset 0 0 0 3px var(--surface);
+    }
+
+    .thumb:focus-visible::-moz-range-thumb {
+      border-width: calc(var(--thumb-pad) - 1px);
+      box-shadow:
+        inset 0 0 0 1px var(--focus-edge),
+        inset 0 0 0 3px var(--surface);
+    }
+
+    .track:not([data-dual]) .thumb {
+      pointer-events: auto;
+    }
+  }
+}

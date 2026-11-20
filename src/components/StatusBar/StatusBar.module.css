@@ -1,0 +1,43 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .bar {
+    display: flex;
+    height: var(--space-2);
+    background: var(--surface-3);
+  }
+
+  .part {
+    flex-basis: 0;
+    background: var(--tone);
+  }
+
+  .line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .state {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--tone-text);
+  }
+
+  .label {
+    font-size: var(--font-base);
+    font-weight: var(--w-medium);
+  }
+
+  .percent {
+    font-size: var(--font-xs);
+    font-weight: var(--w-regular);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .trailing {
+    margin-left: auto;
+  }
+}

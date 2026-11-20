@@ -1,0 +1,128 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Two columns where two of 320px fit, one on a phone; the space between groups is padding under each, so a column's
+     top starts level with its neighbour's */
+  .panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    column-gap: var(--space-6);
+    padding: var(--space-3) var(--space-6) var(--space-2);
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--space-7);
+  }
+
+  .group:last-child {
+    flex: 1;
+  }
+
+  .group:last-child > :last-child {
+    flex: 1;
+  }
+
+  /* One height for every row, whatever its control: the alerts' 12 + 20 + 11, rounded to the 44 a finger needs */
+  .line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: var(--control-input);
+  }
+
+  /* 14px, as the provider details' rows: at the alerts' 15 the desktop sheet read large */
+  .label {
+    min-width: 0;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    color: var(--text);
+  }
+
+  .rangeLine {
+    min-height: var(--control-md);
+    padding-top: var(--space-1);
+  }
+
+  .slider {
+    padding-bottom: var(--pad-pill);
+  }
+
+  /* The threshold's "≥ 90%": the small size and the value weight, here two numbers that also take a typed value; the
+     text colour, as values are not to be pressed. Only a mouse gets the field this small: on a touch screen base.css
+     lifts every field to 16px, under which iOS Safari zooms on focus */
+  .value {
+    display: flex;
+    flex: none;
+    align-items: baseline;
+    color: var(--text);
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+    font-weight: var(--w-value);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .dash {
+    margin: 0 var(--space-1);
+  }
+
+  .bound {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px dashed transparent;
+    background: none;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+
+  .from {
+    text-align: right;
+  }
+
+  .to {
+    text-align: left;
+  }
+
+  .bound:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  .choice {
+    flex: none;
+    width: calc(var(--space-1) * 2 + 3 * var(--control-lg));
+  }
+
+  /* A plate on the switches' track: a bare field right of its label read as a value, and its placeholder "All" said
+     nothing about what to type */
+  .text {
+    flex: 0 1 50%;
+    min-width: 0;
+    height: var(--control-sm);
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--seg-track);
+    color: var(--text);
+    font: inherit;
+    font-size: var(--font-base);
+    outline: none;
+  }
+
+  .text:focus {
+    box-shadow: inset 0 0 0 1px var(--focus-edge);
+  }
+
+  .text::placeholder {
+    color: var(--text-2);
+  }
+}
