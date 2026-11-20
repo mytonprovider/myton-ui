@@ -1,0 +1,9 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

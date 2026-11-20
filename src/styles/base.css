@@ -1,0 +1,169 @@
+@layer ui.tokens, ui.base, ui.components;
+
+/* The element rules every front shares; front-specific rules stay in each front. */
+@layer ui.base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+  }
+
+  /* Mobile webviews paint a grey box over every tapped element otherwise. */
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* macOS thickens light glyphs on a dark ground; grayscale smoothing takes that back without touching the glyph
+     widths, so the dark theme keeps the light theme's weights and nothing moves when the theme flips. */
+  [data-theme="dark"] {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* iOS zooms the page into any focused field set under 16px. Important in this layer beats every front's own rule,
+     layered or not, so every field on a touch screen sits at 16px. */
+  @media (pointer: coarse) {
+    input,
+    select,
+    textarea {
+      font-size: var(--font-lg) !important;
+    }
+  }
+
+  body {
+    color: var(--text);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: var(--w-regular);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-edge);
+    outline-offset: 2px;
+  }
+
+  /* Thin, quiet bars on the page and on every block that scrolls. A touch screen keeps its own
+     overlay bars. */
+  @media (hover: hover) and (pointer: fine) {
+    /* The page keeps the bar's place, so nothing shifts when it grows past the fold; a sheet moves that place into the
+       root's padding while it locks the scroll. A shell whose document never scrolls marks its root and gets no empty
+       strip. */
+    html:not([data-viewport="fixed"]) {
+      scrollbar-gutter: stable;
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) transparent;
+    }
+
+    /* The page is always under the pointer, so only a block darkens its bar on hover. */
+    :not(html):hover {
+      scrollbar-color: var(--scrollbar-thumb-hover) transparent;
+    }
+
+    /* Safari reads no scrollbar-color and draws the bar from these instead. */
+    @supports not (scrollbar-color: auto) {
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      ::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border: 2px solid transparent;
+        border-radius: var(--radius-pill);
+        background: var(--scrollbar-thumb) padding-box;
+      }
+
+      :not(html):hover::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scrollbar-thumb-hover);
+      }
+    }
+  }
+
+  button,
+  select,
+  summary,
+  label {
+    user-select: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  @media (hover: hover) {
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-2);
+  }
+
+  img,
+  svg {
+    display: block;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-theme);
+  }
+
+  [data-theme-switching] *,
+  [data-theme-switching] *::before,
+  [data-theme-switching] *::after {
+    transition: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
