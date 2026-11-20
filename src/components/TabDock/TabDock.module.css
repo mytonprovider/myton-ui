@@ -1,0 +1,98 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + var(--dock-inset));
+    z-index: var(--layer-dock);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .bar {
+    position: relative;
+    display: flex;
+    width: calc(100% - var(--space-8));
+    /* A tab is never wider than half the narrowest sheet: two make --sheet-min, each more adds as much. */
+    max-width: calc(var(--sheet-min) / 2 * var(--dock-tabs));
+    padding: var(--space-1);
+    border: var(--hairline) solid var(--divider);
+    border-radius: var(--radius-xl);
+    /* Navigation, as the section tabs over the page: the card colour, nearly solid so the list under the bar does not
+       show, and a viewed row's tone for the pick. */
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(var(--blur-bar));
+    -webkit-backdrop-filter: blur(var(--blur-bar));
+    box-shadow: var(--shadow-2);
+    pointer-events: auto;
+    /* A bar of the screen, not of the page: a swipe on it does not scroll the page, which cancelled a tap whose finger
+       drifted up a little. */
+    touch-action: none;
+  }
+
+  .thumb {
+    position: absolute;
+    top: var(--space-1);
+    bottom: var(--space-1);
+    left: var(--space-1);
+    /* Inside the bar by its padding, so the two corners run parallel. */
+    border-radius: calc(var(--radius-xl) - var(--space-1));
+    background: var(--surface-3);
+  }
+
+  /* Its own move when nothing leads it; in the mini-app the swiped panes move it frame by frame. */
+  .thumbGlide {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+
+  .thumbHeld {
+    will-change: transform;
+  }
+
+  .tab {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-05);
+    min-width: 0;
+    height: var(--control-xl);
+    padding: 0 var(--space-1);
+    border: none;
+    border-radius: calc(var(--radius-xl) - var(--space-1));
+    background: transparent;
+    color: var(--text-2);
+    font-family: inherit;
+    font-size: var(--font-xs);
+    font-weight: var(--w-medium);
+    cursor: pointer;
+    transition: color var(--dur-fast) ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* As the active segment: the pill marks it, the label takes the text colour (blue on the dark grey pill read 3.5). */
+  .active {
+    color: var(--text);
+  }
+
+  .icon {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+  }
+
+  .label {
+    composes: ellipsis from "../../styles/text.module.css";
+  }
+
+  .badge {
+    margin-left: var(--space-2);
+    color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+  }
+}

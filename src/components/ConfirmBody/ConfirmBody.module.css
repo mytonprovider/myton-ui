@@ -1,0 +1,15 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .note {
+    margin: 0;
+    padding: var(--pad-pill) var(--space-6) var(--space-6);
+    color: var(--text-2);
+    font-size: var(--font-base);
+    text-wrap: pretty;
+  }
+
+  .alert {
+    margin: var(--pad-pill) var(--space-6) 0;
+  }
+}

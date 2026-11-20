@@ -1,0 +1,32 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Under the title and over the globe: the globe rises into the gap above it, so the row keeps the title block's gap
+     to it, and stands above the globe's opener (layer 1), as the title block does, so its lower edge takes the tap. */
+  .row {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    min-height: calc(var(--control-input) + var(--space-1) * 2);
+    margin-bottom: var(--space-10);
+  }
+
+  .control {
+    width: min(420px, 100%);
+  }
+
+  .phone {
+    display: none;
+  }
+
+  @media (max-width: 599px) {
+    .row {
+      display: none;
+    }
+
+    .phone {
+      display: contents;
+    }
+  }
+}
