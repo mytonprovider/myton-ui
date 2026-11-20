@@ -1,0 +1,34 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* The gutter keeps the width from jumping when the list starts to scroll; never wider than the screen inside the
+     edge VIEWPORT_EDGE keeps. */
+  .panel {
+    position: fixed;
+    inset: auto;
+    max-width: calc(100vw - var(--space-6) * 2);
+    margin: 0;
+    padding: var(--space-3);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    /* An option's corner sits inside the panel's by the panel's padding, so the two arcs run parallel. */
+    --popover-inner-radius: calc(var(--radius-lg) - var(--space-3));
+    background: var(--surface);
+    box-shadow: var(--shadow-2);
+    color: var(--text);
+    animation: appear var(--dur-fast) ease-out;
+    /* Placed by measuring the width it was just given: under reduced motion (base.css) and the sites' interpolate-size
+       the min-width transitioned, the measure read the old width and a right-aligned menu stood past the screen edge. */
+    transition-property: none;
+  }
+}

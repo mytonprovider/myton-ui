@@ -1,0 +1,235 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(var(--sheet-y, 0px));
+    }
+  }
+
+  .sheet {
+    flex-direction: column;
+    width: clamp(var(--sheet-min), 58vw, var(--sheet-max));
+    max-width: calc(100vw - var(--space-9));
+    height: fit-content;
+    max-height: min(var(--sheet-max), calc(100dvh - var(--space-9)));
+    padding: 0;
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-xl);
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: var(--shadow-3);
+    overflow: hidden;
+    animation: appear var(--dur-fast) ease-out;
+    transition: opacity var(--dur-fast) ease-out;
+  }
+
+  .sheet[data-leaving] {
+    opacity: 0;
+  }
+
+  .sheet[open] {
+    display: flex;
+  }
+
+  .sheet:focus {
+    outline: none;
+  }
+
+  .sheet::backdrop {
+    background: var(--scrim);
+    animation: appear var(--dur-fast) ease-out;
+    transition: opacity var(--dur-fast) ease-out;
+  }
+
+  .sheet[data-leaving]::backdrop {
+    opacity: 0;
+  }
+
+  .wide {
+    width: clamp(var(--sheet-min), 92vw, var(--content-max));
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: none;
+    padding: var(--space-4) var(--space-5) var(--space-2) var(--space-6);
+  }
+
+  .prose .header {
+    padding-left: var(--space-8);
+  }
+
+  .grabber {
+    display: none;
+  }
+
+  .grabberMark {
+    width: var(--space-10);
+    height: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--control-off);
+  }
+
+  /* The drawer the dialog turns into below 1200px, worn at every width by a front's own layer. */
+  .panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px solid var(--divider);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: var(--shadow-3);
+    animation: slide-up var(--dur-sheet) var(--ease-sheet);
+    transition: transform var(--dur-base) var(--ease-sheet);
+  }
+
+  .panel:focus {
+    outline: none;
+  }
+
+  .panelGrabber {
+    flex: none;
+    margin: var(--space-2) auto 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* A key leads in the mono face at the title's weight and a size under it: a key is all capitals, and at 16 they
+     stood 11.8px against the title's 8.7px lowercase and read heavy; at 14 they stand 10.3. No icon beside it, as no
+     title carries one: it starts where any sheet's title starts. */
+  .lead {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    font-weight: var(--w-medium);
+  }
+
+  .title,
+  .subject {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .title {
+    font-size: var(--font-lg);
+    line-height: var(--line-base);
+    font-weight: var(--w-medium);
+    letter-spacing: var(--tracking-snug);
+  }
+
+  .subject {
+    flex: none;
+    max-width: 42%;
+    font-family: var(--font-mono), monospace;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    font-weight: var(--w-regular);
+    color: var(--text-2);
+  }
+
+  .badge {
+    display: grid;
+    place-items: center;
+    flex: none;
+    min-width: var(--control-badge);
+    height: var(--control-badge);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--fill);
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    font-weight: var(--w-medium);
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .footer {
+    flex: none;
+    padding: var(--space-5) var(--space-6) var(--pad-pill);
+  }
+
+  .footer:empty {
+    display: none;
+  }
+
+  /* Matches useSheetDrag's SHEET_DRAWER. */
+  @media (max-width: 1199px) {
+    .sheet {
+      width: 100%;
+      max-width: 100%;
+      top: auto;
+      bottom: 0;
+      height: auto;
+      max-height: 88dvh;
+      margin: 0;
+      border: 0;
+      border-top: 1px solid var(--divider);
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      transform: translateY(var(--sheet-y, 0px));
+      animation: slide-up var(--dur-sheet) var(--ease-sheet);
+      transition: transform var(--dur-base) var(--ease-sheet);
+    }
+
+    .sheet::backdrop {
+      animation-duration: var(--dur-sheet);
+      animation-timing-function: var(--ease-sheet);
+      transition: opacity var(--dur-base) var(--ease-sheet);
+    }
+
+    .sheet[data-dragging] {
+      transition: none;
+    }
+
+    .sheet[data-leaving] {
+      --sheet-y: 100%;
+      opacity: 1;
+    }
+
+    .header {
+      position: relative;
+      padding-top: var(--space-7);
+      touch-action: none;
+    }
+
+    .grabber {
+      display: block;
+      position: absolute;
+      top: var(--space-2);
+      left: 50%;
+      translate: -50% 0;
+    }
+  }
+}

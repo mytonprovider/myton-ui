@@ -1,0 +1,124 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* A pill track with a 4px inset and a pill thumb on the shadow; 32 inside a 44px row of a card, 40 for controls and
+     52 for sections. A choice inside content: the track a step below its card or sheet, the pick raised on it. */
+  .box {
+    position: relative;
+    display: flex;
+    padding: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--seg-track);
+    touch-action: pan-y;
+  }
+
+  .sm {
+    height: var(--control-sm);
+    font-size: var(--font-xs);
+  }
+
+  .md {
+    height: var(--control-md);
+    font-size: var(--font-base);
+  }
+
+  /* Navigation, not a choice: a section's tabs stand on the page and may overlap a picture, as the globe, so they
+     are a card, solid and edged by its shadow (a hairline sinks into the light page at ΔE 1.9 and stands out on the
+     dark one at 8.8), with a viewed row's tone for the pick, as the tab dock has. */
+  .lg {
+    height: var(--control-xl);
+    font-size: var(--font-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+  }
+
+  .lg .thumb {
+    background: var(--surface-3);
+    box-shadow: none;
+  }
+
+  .underline {
+    height: var(--control-input);
+    border-bottom: var(--hairline) solid var(--divider);
+    border-radius: 0;
+    background: none;
+  }
+
+  .thumb {
+    position: absolute;
+    top: var(--space-1);
+    bottom: var(--space-1);
+    left: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--seg-thumb);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+
+  /* The pick's line lies over the hairline under the tabs. */
+  .underline .thumb {
+    top: auto;
+    bottom: calc(-1 * var(--hairline));
+    height: 2px;
+    border-radius: 1px;
+    background: var(--accent);
+    box-shadow: none;
+  }
+
+  .held {
+    transition: none;
+    will-change: transform;
+  }
+
+  .option {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-2);
+    font: inherit;
+    font-weight: var(--w-medium);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color var(--dur-base) ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .selected {
+    color: var(--text);
+  }
+
+  .underline .option {
+    border-radius: 0;
+  }
+
+  .underline .selected {
+    color: var(--accent);
+  }
+
+  .text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .badge {
+    color: var(--text-2);
+  }
+
+  /* The 32px option keeps the 44 a finger needs, the 24px one too. */
+  .md .option::after,
+  .sm .option::after {
+    content: "";
+    position: absolute;
+    inset: calc((100% - var(--control-input)) / 2) 0;
+  }
+}
