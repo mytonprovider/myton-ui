@@ -1,0 +1,134 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    min-height: var(--control-input);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-2);
+    font: inherit;
+    font-size: var(--font-base);
+    line-height: 20px;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .trigger:focus-visible {
+    outline: none;
+  }
+
+  /* The row has no room above or below, so the ring is drawn inside it, a step past the text on each side, as a field
+     row's press wash reaches. A ring of its own leaves the trigger's box, and the list placed at it, where they are */
+  .trigger:focus-visible::after {
+    content: "";
+    position: absolute;
+    inset: 0 calc(-1 * var(--space-3));
+    border-radius: var(--radius-xs);
+    outline: 2px solid var(--focus-edge);
+    outline-offset: -2px;
+    pointer-events: none;
+  }
+
+  .label {
+    flex: none;
+    color: var(--text);
+  }
+
+  .summary {
+    composes: ellipsis from "../../styles/text.module.css";
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+  }
+
+  .picked {
+    color: var(--accent);
+  }
+
+  .chevron {
+    flex: none;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    color: var(--text-2);
+    transition: transform var(--dur-fast) ease;
+  }
+
+  .picked .chevron {
+    color: inherit;
+  }
+
+  .trigger[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .option {
+    display: flex;
+    flex: none;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-4);
+    min-height: var(--control-md);
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--popover-inner-radius);
+    background: none;
+    color: var(--text);
+    font: inherit;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .option:not([aria-disabled="true"]):active {
+    background: var(--hover);
+  }
+
+  @media (hover: hover) {
+    .option:not([aria-disabled="true"]):hover {
+      background: var(--hover);
+    }
+  }
+
+  .option[aria-disabled="true"] {
+    opacity: var(--disabled-opacity);
+    cursor: default;
+  }
+
+  .optionLabel {
+    composes: ellipsis from "../../styles/text.module.css";
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mono {
+    font-family: var(--font-mono), monospace;
+  }
+
+  .count {
+    flex: none;
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    line-height: var(--line-base);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (pointer: coarse) {
+    .option {
+      min-height: var(--control-input);
+    }
+  }
+}

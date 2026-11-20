@@ -1,0 +1,178 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  /* Set on the rows' text, as iOS heads a group: no icon, so nothing else lines it up. */
+  .title {
+    margin: 0 var(--row-px) var(--space-3);
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-25);
+  }
+
+  /* Rows parted by a full-width hairline, the side inset on each row so a pressed row washes edge to edge. A read row
+     stands 36 rather than a tapped row's 44: at 44 the provider's screen grew by half a screen of scrolling. */
+  .divided {
+    gap: 0;
+  }
+
+  .divided > * {
+    padding-inline: var(--row-px);
+  }
+
+  .divided > * + * {
+    border-top: var(--hairline) solid var(--divider);
+  }
+
+  .divided > .row,
+  .divided > .head {
+    padding-block: var(--space-3);
+  }
+
+  .card {
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+  }
+
+  /* A row that opens something washes edge to edge, as a menu row does, and rounds with the card at its ends. */
+  .divided > .action {
+    margin: 0;
+    padding: var(--space-3) var(--row-px);
+    border-radius: 0;
+  }
+
+  .divided > .action:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+
+  .divided > .action:last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  /* A card's rows are body text, a step over the captions: at 13 they read small beside the cards' 20px figures. The
+     line height is set here, not inherited: the mini-app sets none on its page, and its rows came 17px against the
+     sites' 20. */
+  .row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+  }
+
+  /* The label keeps its line; the value gives way first. */
+  .label {
+    flex: none;
+    font-weight: var(--w-regular);
+    letter-spacing: var(--tracking-small);
+    color: var(--text-2);
+  }
+
+  .gap {
+    flex: 1;
+    min-width: var(--space-5);
+  }
+
+  .value {
+    composes: ellipsis from "../../styles/text.module.css";
+    min-width: 0;
+    font-weight: var(--w-value);
+    color: var(--text);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* An id is already shortened to fit, so it never cuts; it reads in the regular weight the mono face is drawn for,
+     whether the row sets it in mono or a front passes a ShortId as the value. */
+  .mono {
+    min-width: max-content;
+    font-family: var(--font-mono), monospace;
+    font-weight: var(--w-regular);
+  }
+
+  .value [data-short-id] {
+    font-weight: var(--w-regular);
+  }
+
+  .link {
+    color: var(--accent);
+  }
+
+  .upper {
+    text-transform: uppercase;
+  }
+
+  .red {
+    color: var(--tone-red-text);
+  }
+
+  .yellow {
+    color: var(--tone-yellow-text);
+  }
+
+  /* The press wash reaches a step past the text on each side; the row keeps its place in the card's rhythm. */
+  .action {
+    margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-3));
+    padding: var(--space-1) var(--space-3);
+    border: 0;
+    border-radius: var(--radius-xs);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: var(--font-base);
+    line-height: var(--line-base);
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .action:active {
+    background: var(--hover);
+  }
+
+  .chevron {
+    flex: none;
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    margin-left: calc(-1 * var(--space-1));
+    color: var(--text-2);
+  }
+
+  .copy {
+    margin-block: calc((var(--font-base) * var(--line-base) - var(--control-xs)) / 2);
+  }
+
+  @media (hover: hover) {
+    .action:hover {
+      background: var(--hover);
+    }
+  }
+
+  @media (pointer: coarse) {
+    .action {
+      position: relative;
+    }
+
+    .action::after {
+      content: "";
+      position: absolute;
+      inset: calc((100% - var(--control-input)) / 2) 0;
+    }
+
+    .link {
+      position: relative;
+      overflow: visible;
+    }
+
+    .link::after {
+      content: "";
+      position: absolute;
+      inset: calc((100% - var(--control-input)) / 2) 0;
+    }
+  }
+}

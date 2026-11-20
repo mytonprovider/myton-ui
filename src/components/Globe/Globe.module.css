@@ -1,0 +1,172 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.components {
+  .band {
+    position: relative;
+    margin: calc(-1 * var(--space-10)) calc(-1 * var(--space-6)) calc(-1 * var(--overlap));
+  }
+
+  .stage {
+    position: absolute;
+    inset: calc(-1 * var(--rise)) 0 auto;
+    pointer-events: none;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-mask-image: linear-gradient(
+      transparent,
+      #000 var(--rise),
+      #000 calc(var(--cut) - var(--fade)),
+      transparent var(--cut)
+    );
+    mask-image: linear-gradient(
+      transparent,
+      #000 var(--rise),
+      #000 calc(var(--cut) - var(--fade)),
+      transparent var(--cut)
+    );
+  }
+
+  .band[data-state="opening"] ~ *,
+  .band[data-state="closing"] ~ * {
+    will-change: transform;
+  }
+
+  .band[data-state="open"] .stage {
+    pointer-events: auto;
+  }
+
+  .stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--dur-sheet) ease;
+  }
+
+  .stage[data-ready] canvas {
+    opacity: 1;
+  }
+
+  /* The block after the globe lies on its lower edge by --overlap: the opener stops above it, and the band at rest lets
+     a tap through, so a search or a wizard's steps there take it, not the map. */
+  .band[data-state="rest"] {
+    pointer-events: none;
+  }
+
+  .opener {
+    position: absolute;
+    inset: 0 0 var(--overlap);
+    z-index: 1;
+    pointer-events: auto;
+    border-radius: var(--radius-xl);
+    background: none;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .band[data-hot] .opener {
+    cursor: pointer;
+  }
+
+  .opener:focus-visible {
+    outline: 2px solid var(--focus-edge);
+    outline-offset: -6px;
+  }
+
+  .stats {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--overlap) + var(--space-5));
+    z-index: 2;
+    display: flex;
+    gap: var(--space-7);
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    letter-spacing: var(--tracking-small);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, var(--space-3));
+    transition:
+      opacity var(--dur-fast) ease,
+      transform var(--dur-fast) ease;
+  }
+
+  .band[data-state="open"] .stats {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition:
+      opacity var(--dur-base) ease 0.08s,
+      transform var(--dur-sheet) cubic-bezier(0.16, 1, 0.3, 1) 0.08s;
+  }
+
+  .stat b {
+    color: var(--text);
+    font-weight: var(--w-medium);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tooltip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    padding: var(--space-4) var(--pad-pill);
+    border-radius: var(--radius-lg);
+    background: var(--globe-overlay);
+    color: var(--text);
+    box-shadow: var(--shadow-2);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-fast) ease;
+    will-change: transform;
+  }
+
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    left: var(--tail-x, 50%);
+    top: 100%;
+    border: 6px solid transparent;
+    border-top-color: var(--globe-overlay);
+    transform: translateX(-50%);
+  }
+
+  .tooltipVisible {
+    opacity: 1;
+  }
+
+  .tooltipTitle {
+    font-size: var(--font-base);
+    font-weight: var(--w-medium);
+    line-height: 1.25;
+  }
+
+  .tooltipRegion {
+    color: var(--text-2);
+    font-size: var(--font-xs);
+    letter-spacing: var(--tracking-small);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 599px) {
+    .stats {
+      gap: var(--space-5);
+    }
+  }
+
+  /* base.css cuts every transition short but leaves its delay */
+  @media (prefers-reduced-motion: reduce) {
+    .stats,
+    .band[data-state="open"] .stats,
+    .tooltip {
+      transition-delay: 0s;
+    }
+  }
+}
